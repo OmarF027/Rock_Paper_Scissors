@@ -1,0 +1,1 @@
+Un semplice gioco di Sasso Carta Forbice (Rock Paper Scissors) giocabile via console in JavaScript. Apri la console del browser (F12 o Ctrl+Shift+I). Esegui il file inserisci la tua scelta tra **sasso**, **carta** o **forbice**
