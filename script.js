@@ -10,18 +10,6 @@ function getComputerChoice() {
   }
 }
 
-// Scelte dell'utente
-function getHumanChoice() {
-  const input = prompt("Scegli: sasso, carta o forbice");
-
-  if (input === null) {
-    alert("Hai annullato il gioco.");
-    throw new Error("Gioco interrotto dall'utente");
-  }
-
-  return input.toLowerCase(); // converte l’input in minuscolo
-}
-
 // Punteggio
 let humanScore = 0;
 let computerScore = 0;
@@ -33,11 +21,8 @@ function capitalize(str) {
 
 // Gioca un singolo round
 function playRound(humanChoice, computerChoice) {
-  console.log(`Tu: ${humanChoice} | Computer: ${computerChoice}`);
-
   if (humanChoice === computerChoice) {
-    console.log("Pareggio!");
-    return;
+    return "Pareggio!";
   }
 
   if (
@@ -45,50 +30,33 @@ function playRound(humanChoice, computerChoice) {
     (humanChoice === "carta" && computerChoice === "sasso") ||
     (humanChoice === "forbice" && computerChoice === "carta")
   ) {
-    console.log(`Hai VINTO! ${capitalize(humanChoice)} batte ${capitalize(computerChoice)}.`);
     humanScore++;
+    return `Hai VINTO! ${capitalize(humanChoice)} batte ${capitalize(computerChoice)}.`;
   } else {
-    console.log(`Hai perso! ${capitalize(computerChoice)} batte ${capitalize(humanChoice)}.`);
     computerScore++;
+    return `Hai perso! ${capitalize(computerChoice)} batte ${capitalize(humanChoice)}.`;
   }
 }
 
-// Gioca l’intero gioco (5 round)
-function playGame() {
-  humanScore = 0;
-  computerScore = 0;
+// Seleziono i pulsanti e le aree dove mostrare risultati e punteggio
+const buttons = document.querySelectorAll("button");
+const resultDiv = document.getElementById("result");
+const scoreDiv = document.getElementById("score");
 
-  for (let i = 1; i <= 5; i++) {
-    console.log(`\n--- Round ${i} ---`);
-    const humanChoice = getHumanChoice();
+buttons.forEach((button) => {
+  button.addEventListener("click", () => {
+    if (humanScore === 5 || computerScore === 5) return; // partita finita
 
-    if (
-      humanChoice !== "sasso" &&
-      humanChoice !== "carta" &&
-      humanChoice !== "forbice"
-    ) {
-      console.log("Scelta non valida. Scrivi solo sasso, carta o forbice.");
-      i--; // ripeti il round
-      continue;
-    }
-
+    const humanChoice = button.id;
     const computerChoice = getComputerChoice();
-    playRound(humanChoice, computerChoice);
-    console.log(`Punteggio: Tu ${humanScore} - Computer ${computerScore}`);
-  }
+    const message = playRound(humanChoice, computerChoice);
 
-  console.log("\n--- RISULTATO FINALE ---");
-  let finalMessage = "";
-  if (humanScore > computerScore) {
-    finalMessage = "🏆 Hai vinto la partita!";
-  } else if (humanScore < computerScore) {
-    finalMessage = "😞 Hai perso la partita.";
-  } else {
-    finalMessage = "🤝 La partita è in pareggio.";
-  }
-  console.log(finalMessage);
-  alert(finalMessage);
-}
+    resultDiv.textContent = message;
+    scoreDiv.textContent = `Punteggio — Tu: ${humanScore} | Computer: ${computerScore}`;
 
-// Avvia il gioco
-playGame();
+    if (humanScore === 5 || computerScore === 5) {
+      const finalMsg = humanScore === 5 ? "🏆 Hai vinto la partita!" : "😞 Hai perso la partita.";
+      alert(finalMsg);
+    }
+  });
+});

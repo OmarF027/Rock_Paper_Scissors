@@ -1,11 +1,39 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-  <meta charset="UTF-8">
-  <title>Rock Paper Scissors</title>
+  <meta charset="UTF-8" />
+  <title>Sasso Carta Forbice</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin: 2rem;
+    }
+    button {
+      font-size: 1.2rem;
+      margin: 0.5rem;
+      padding: 0.7rem 1.5rem;
+      cursor: pointer;
+    }
+    #result, #score {
+      margin-top: 1.5rem;
+      font-size: 1.3rem;
+      font-weight: bold;
+    }
+  </style>
 </head>
 <body>
-    
+  <h1>Sasso, Carta, Forbice</h1>
+
+  <div>
+    <button id="sasso">Sasso</button>
+    <button id="carta">Carta</button>
+    <button id="forbice">Forbice</button>
+  </div>
+
+  <div id="result"></div>
+  <div id="score">Punteggio — Tu: 0 | Computer: 0</div>
+
   <script src="script.js"></script>
 </body>
 </html>
